@@ -1,0 +1,22 @@
+name: index-check
+
+on:
+  push:
+    paths:
+      - "bug-patterns/**"
+      - "scripts/**"
+  pull_request:
+    paths:
+      - "bug-patterns/**"
+      - "scripts/**"
+
+jobs:
+  check-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: INDEX.md phải khớp bản sinh từ scripts/gen-index.py
+        run: python3 scripts/gen-index.py --check
